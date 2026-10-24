@@ -2,8 +2,8 @@
 // drifting satellite nodes, shattering shards and dissolving dust. Every
 // element has its own color and on/off switch from the settings.
 (() => {
-  const FX = (globalThis.__plexusFx = globalThis.__plexusFx || {});
-  const { rgb } = globalThis.__plexusSettings;
+  const FX = (globalThis.__lumaweaveFx = globalThis.__lumaweaveFx || {});
+  const { rgb } = globalThis.__lumaweaveSettings;
 
   const TIP_IDS = [4, 8, 12, 16, 20];
   const PALM_IDS = [0, 5, 9, 17];
@@ -80,7 +80,7 @@
       }
     });
 
-    // Classic plexus: link any nodes that drift close to each other.
+    // Classic lumaweave: link any nodes that drift close to each other.
     const nodes = [...tipSets.flat(), ...sats];
     const maxD = Math.min(w, h) * 0.24;
     for (let i = 0; i < nodes.length; i += 1) {
@@ -92,7 +92,7 @@
     return { tipSets, palms, sats, segments, facets, handAlpha, sizes: handList.map((x) => x.size) };
   }
 
-  function createPlexusRenderer() {
+  function createWeaveRenderer() {
     const particles = FX.createParticles();
     let hands = new Map(); // handedness -> smoothed hand (normalized coords)
     let level = 0; // 0..1 fade of the whole web
@@ -100,7 +100,7 @@
     let lastTick = null;
     let frame = { w: 1280, h: 720 };
     let geom = buildGeometry([], 0, 0, frame.w, frame.h);
-    let settings = globalThis.__plexusSettings.DEFAULTS;
+    let settings = globalThis.__lumaweaveSettings.DEFAULTS;
 
     const scale = () => Math.min(frame.w, frame.h);
     const els = () => settings.elements;
@@ -253,5 +253,5 @@
     return { setHands, setActive, update, draw, isIdle, lightSources, level: () => level };
   }
 
-  FX.createPlexusRenderer = createPlexusRenderer;
+  FX.createWeaveRenderer = createWeaveRenderer;
 })();

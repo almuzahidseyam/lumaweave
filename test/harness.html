@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Meet Plexus harness</title>
+    <title>LumaWeave harness</title>
     <style>
       body { margin: 0; background: #111; color: #ddd; font: 14px system-ui, sans-serif; }
       main { display: grid; gap: 12px; padding: 16px; max-width: 1000px; margin: auto; }
@@ -24,13 +24,13 @@
     <script>
       // Serve the extension folder as the site root; the detector iframe then
       // loads from the same origin, just like it loads from the extension in Meet.
-      document.documentElement.dataset.plexusBase = `${location.origin}/`;
+      document.documentElement.dataset.lumaweaveBase = `${location.origin}/`;
     </script>
     <script src="../src/settings.js"></script>
     <script src="../src/status.js"></script>
     <script src="../src/clap.js"></script>
     <script src="../src/particles.js"></script>
-    <script src="../src/plexus.js"></script>
+    <script src="../src/weave.js"></script>
     <script src="../src/lighting.js"></script>
     <script src="../src/tracker.js"></script>
     <script src="../src/audio-clap.js"></script>
@@ -38,10 +38,10 @@
     <script src="../src/pipeline.js"></script>
     <script src="../src/hook.js"></script>
     <script>
-      const FX = globalThis.__plexusFx;
+      const FX = globalThis.__lumaweaveFx;
       const params = new URLSearchParams(location.search);
       // No extension bridge here: ?person=1 turns on person-aware lighting.
-      FX.settings = __plexusSettings.sanitize({
+      FX.settings = __lumaweaveSettings.sanitize({
         personLight: { on: params.get('person') === '1', strength: 70 },
       });
       const out = document.getElementById('out');
@@ -71,8 +71,8 @@
           const fps = (frames * 1000) / (now - last);
           frames = 0;
           last = now;
-          window.__plexusStats = { ...FX.engine.stats(), fps: Math.round(fps) };
-          statsEl.textContent = JSON.stringify(window.__plexusStats, null, 1);
+          window.__lumaweaveStats = { ...FX.engine.stats(), fps: Math.round(fps) };
+          statsEl.textContent = JSON.stringify(window.__lumaweaveStats, null, 1);
         }, 1000);
       }
 

@@ -2,13 +2,13 @@
 // talks to the isolated-world bridge (settings in, on/off state out).
 // Alt+Shift+P toggles the effect by keyboard as a fallback to clapping.
 (() => {
-  const FX = (globalThis.__plexusFx = globalThis.__plexusFx || {});
-  const S = globalThis.__plexusSettings;
+  const FX = (globalThis.__lumaweaveFx = globalThis.__lumaweaveFx || {});
+  const S = globalThis.__lumaweaveSettings;
   if (FX.hooked || !navigator.mediaDevices) return;
 
   // Every page-world module must have loaded; if one failed, say so instead of
   // silently leaving the camera unhooked.
-  const REQUIRED = ['showStatus', 'createClapDetector', 'createParticles', 'createPlexusRenderer',
+  const REQUIRED = ['showStatus', 'createClapDetector', 'createParticles', 'createWeaveRenderer',
     'createLighting', 'createTracker', 'listenForTransients', 'getEngine', 'wrapStream'];
   const missing = [...(S ? [] : ['settings']), ...REQUIRED.filter((name) => typeof FX[name] !== 'function')];
   if (missing.length) {
@@ -59,28 +59,28 @@
   window.addEventListener(
     'keydown',
     (event) => {
-      if (!(event.altKey && event.shiftKey && event.code === 'KeyP')) return;
+      if (event.repeat || !(event.altKey && event.shiftKey && event.code === 'KeyP')) return;
       event.preventDefault();
       toggleOrExplain();
     },
     true,
   );
 
-  // Bridge channel: same-window messages tagged with __plexus.
-  const post = (type, extra = {}) => window.postMessage({ __plexus: type, ...extra }, location.origin);
+  // Bridge channel: same-window messages tagged with __lumaweave.
+  const post = (type, extra = {}) => window.postMessage({ __lumaweave: type, ...extra }, location.origin);
   FX.notifyState = (state) => post('state', state);
 
   window.addEventListener('message', (event) => {
-    if (event.source !== window || !event.data || typeof event.data.__plexus !== 'string') return;
+    if (event.source !== window || event.origin !== location.origin || !event.data || typeof event.data.__lumaweave !== 'string') return;
     const msg = event.data;
-    if (msg.__plexus === 'settings') {
-      const prevSound = FX.settings.clapSound;
+    if (msg.__lumaweave === 'settings') {
       FX.settings = S.sanitize(msg.settings);
-      if (FX.engine && prevSound !== FX.settings.clapSound) FX.engine.refreshAudio();
+      FX.engine?.settingsChanged();
     }
-    if (msg.__plexus === 'toggle') toggleOrExplain();
+    if (msg.__lumaweave === 'toggle') toggleOrExplain();
   });
   post('hello');
+  window.addEventListener('pagehide', () => FX.engine?.destroy(), { once: true });
 
   const announce = () => FX.showStatus('loaded · waiting for your camera', 'info', true);
   if (document.readyState === 'loading') {

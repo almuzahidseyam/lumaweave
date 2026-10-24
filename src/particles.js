@@ -1,7 +1,7 @@
 // Particle systems in pixel space: triangle shards that shatter outward, and
 // fine dust that peels off the lines and dissolves as it drifts away.
 (() => {
-  const FX = (globalThis.__plexusFx = globalThis.__plexusFx || {});
+  const FX = (globalThis.__lumaweaveFx = globalThis.__lumaweaveFx || {});
 
   const MAX_SHARDS = 220;
   const MAX_DUST = 1400;

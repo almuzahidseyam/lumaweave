@@ -1,0 +1,32 @@
+name: Validate LumaWeave
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  extension:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Validate syntax, manifest and bundled model checksums
+        run: npm run check
+      - name: Run regression tests
+        run: npm test
+      - name: Install browser and Linux dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Exercise preview, fake camera, real models, popup and installed extension
+        run: npm run test:browser
+      - name: Build and verify installable ZIP
+        run: |
+          npm run package
+          unzip -t dist/lumaweave-*.zip
+          cd dist && sha256sum -c SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lumaweave-extension
+          path: dist/*

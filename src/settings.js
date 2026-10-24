@@ -16,7 +16,10 @@
     darken: 25, // % darker footage while the effect is on
     lightSpill: { on: true, strength: 60 },
     personLight: { on: false, strength: 70 },
-    clapSound: true,
+    clapSound: false,
+    clapGesture: true,
+    performance: 'balanced',
+    reducedMotion: false,
   });
 
   const PRESETS = {
@@ -37,6 +40,11 @@
   };
 
   const HEX = /^#[0-9a-f]{6}$/i;
+  const PROFILES = Object.freeze({
+    battery: { interval: 100, width: 320 },
+    balanced: { interval: 50, width: 480 },
+    quality: { interval: 33, width: 640 },
+  });
 
   const clamp = (v, min, max, fallback) => {
     const n = Number(v);
@@ -69,11 +77,14 @@
         strength: clamp(person.strength, 0, 100, DEFAULTS.personLight.strength),
       },
       clapSound: bool(src.clapSound, DEFAULTS.clapSound),
+      clapGesture: bool(src.clapGesture, DEFAULTS.clapGesture),
+      performance: ['battery', 'balanced', 'quality'].includes(src.performance) ? src.performance : DEFAULTS.performance,
+      reducedMotion: bool(src.reducedMotion, DEFAULTS.reducedMotion),
     };
   }
 
   function applyPreset(settings, name) {
-    const preset = PRESETS[name];
+    const preset = Object.hasOwn(PRESETS, name) ? PRESETS[name] : null;
     if (!preset) return settings;
     const elements = Object.fromEntries(
       ELEMENTS.map((key) => [key, { ...settings.elements[key], color: preset[key] }]),
@@ -87,7 +98,7 @@
     return `${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}`;
   }
 
-  const api = { ELEMENTS, DEFAULTS, PRESETS, LABELS, sanitize, applyPreset, rgb };
-  globalThis.__plexusSettings = api;
+  const api = { ELEMENTS, DEFAULTS, PRESETS, LABELS, PROFILES, sanitize, applyPreset, rgb };
+  globalThis.__lumaweaveSettings = api;
   if (typeof module !== 'undefined') module.exports = api;
 })();

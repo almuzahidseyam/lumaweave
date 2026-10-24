@@ -1,73 +1,60 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Meet Plexus</title>
-    <link rel="stylesheet" href="popup.css" />
-  </head>
-  <body>
-    <header>
-      <div class="brand">
-        <img src="../icons/icon48.png" alt="" width="28" height="28" />
-        <div>
-          <h1>Meet Plexus</h1>
-          <p id="state" class="state">Open a Google Meet tab</p>
-        </div>
-      </div>
-      <button id="toggle" type="button" disabled>Toggle</button>
-    </header>
-
-    <section>
-      <h2>Color presets</h2>
-      <div id="presets" class="chips"></div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LumaWeave</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <div class="brand"><img src="../icons/icon48.png" alt="" width="36" height="36" />
+      <div><h1>LumaWeave</h1><p>Make room for a little light.</p></div>
+    </div>
+    <span class="version">v2.0</span>
+  </header>
+  <main>
+    <section class="connection" aria-label="Meet connection">
+      <div class="status-line"><span id="indicator" class="indicator"></span><p id="state" role="status">Checking your Meet tab…</p></div>
+      <p id="stateDetail" class="muted">Your camera stays under your control.</p>
+      <button id="toggle" class="primary" type="button" disabled>Turn on the light</button>
+      <button id="preview" class="text-button" type="button">Open camera-free preview ↗</button>
     </section>
-
-    <section>
-      <h2>Elements</h2>
-      <ul id="elements" class="rows"></ul>
-    </section>
-
-    <section>
-      <h2>Footage</h2>
-      <label class="row slider">
-        <span>Darken while on</span>
-        <input id="darken" type="range" min="0" max="60" step="1" />
-        <output id="darkenOut"></output>
-      </label>
-      <label class="row">
-        <input id="spillOn" type="checkbox" />
-        <span>Light spill onto footage</span>
-      </label>
-      <label class="row slider indent">
-        <span>Strength</span>
-        <input id="spill" type="range" min="0" max="100" step="1" />
-        <output id="spillOut"></output>
-      </label>
-      <label class="row">
-        <input id="personOn" type="checkbox" />
-        <span>Person-aware lighting <em>uses more CPU/GPU</em></span>
-      </label>
-      <label class="row slider indent">
-        <span>Strength</span>
-        <input id="person" type="range" min="0" max="100" step="1" />
-        <output id="personOut"></output>
-      </label>
-    </section>
-
-    <section>
-      <h2>Clap</h2>
-      <label class="row">
-        <input id="clapSound" type="checkbox" />
-        <span>Also listen for the clap sound <em>mic stays on this computer</em></span>
-      </label>
-      <p class="hint">Double-clap to turn on, double-clap again to turn off. Alt+Shift+P also toggles.</p>
-    </section>
-
-    <footer>
-      <button id="reset" type="button" class="ghost">Reset to defaults</button>
-    </footer>
-
-    <script src="../src/settings.js"></script>
-    <script src="popup.js"></script>
-  </body>
+    <fieldset id="controls" disabled>
+      <legend class="sr-only">Effect settings</legend>
+      <section><h2>Your palette</h2><div id="presets" class="chips" aria-label="Color palettes"></div></section>
+      <section>
+        <label class="row" for="performance"><span>Tracking quality<small>Balance detail and battery life</small></span>
+          <select id="performance"><option value="battery">Battery saver</option><option value="balanced">Balanced</option><option value="quality">High quality</option></select>
+        </label>
+        <label class="row"><input id="reducedMotion" type="checkbox" /><span>Gentler motion<small>Hide flying shards and dust</small></span></label>
+      </section>
+      <details>
+        <summary>Fine-tune the effect</summary>
+        <section><h2>Elements</h2><ul id="elements" class="rows"></ul></section>
+        <section><h2>Lighting</h2>
+          <label class="row slider"><span>Darken footage</span><input id="darken" type="range" min="0" max="60" step="1" /><output id="darkenOut" for="darken"></output></label>
+          <label class="row"><input id="spillOn" type="checkbox" /><span>Light spill</span></label>
+          <label class="row slider indent"><span>Strength</span><input id="spill" type="range" min="0" max="100" step="1" /><output id="spillOut" for="spill"></output></label>
+          <label class="row"><input id="personOn" type="checkbox" /><span>Person-aware lighting<small>Extra model · higher CPU/GPU use</small></span></label>
+          <label class="row slider indent"><span>Strength</span><input id="person" type="range" min="0" max="100" step="1" /><output id="personOut" for="person"></output></label>
+        </section>
+      </details>
+      <section><h2>Hands, sound & shortcuts</h2>
+        <label class="row"><input id="clapGesture" type="checkbox" /><span>Double-clap gesture</span></label>
+        <label class="row"><input id="clapSound" type="checkbox" /><span>Clap sound detection<small>Optional · uses Meet's existing, unmuted mic</small></span></label>
+        <p class="hint"><kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> toggles while your camera is running.</p>
+      </section>
+      <footer>
+        <div class="actions"><button id="export" type="button" class="ghost">Export</button><button id="import" type="button" class="ghost">Import</button><button id="reset" type="button" class="text-button">Reset</button></div>
+        <input id="importFile" type="file" accept="application/json,.json" hidden />
+      </footer>
+    </fieldset>
+    <p id="saveStatus" class="save-status" role="status">Loading preferences…</p>
+    <p class="privacy">Tracking runs on your device. Preferences stay here.</p>
+  </main>
+  <script src="../src/settings.js"></script>
+  <script src="../src/storage.js"></script>
+  <script src="popup.js"></script>
+</body>
 </html>

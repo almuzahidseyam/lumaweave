@@ -2,7 +2,7 @@
 // obvious which stage the extension reached: loaded, camera captured, hand
 // tracking ready, effect on/off, or what failed.
 (() => {
-  const FX = (globalThis.__plexusFx = globalThis.__plexusFx || {});
+  const FX = (globalThis.__lumaweaveFx = globalThis.__lumaweaveFx || {});
 
   const HIDE_AFTER_MS = 6000;
   const TONES = {
@@ -32,7 +32,7 @@
   // sticky: keep visible (errors and "waiting" states); otherwise fade out.
   FX.showStatus = (text, tone = 'info', sticky = false) => {
     const el = ensurePill();
-    el.textContent = `Meet Plexus · ${text}`;
+    el.textContent = `LumaWeave · ${text}`;
     el.style.background = TONES[tone] || TONES.info;
     el.style.opacity = '1';
     clearTimeout(hideTimer);

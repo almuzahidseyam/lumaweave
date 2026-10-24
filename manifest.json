@@ -1,12 +1,13 @@
 {
   "manifest_version": 3,
-  "name": "Meet Plexus",
-  "version": "1.1.1",
-  "description": "Double-clap on camera to draw glowing plexus lines between your fingertips in Google Meet. Double-clap again to turn it off.",
-  "icons": { "48": "icons/icon48.png", "128": "icons/icon128.png" },
+  "name": "LumaWeave",
+  "version": "2.0.0",
+  "minimum_chrome_version": "120",
+  "description": "Weave light between your hands in Google Meet. Local tracking, color presets, energy-saving modes and an interactive preview.",
+  "icons": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
   "permissions": ["storage"],
   "action": {
-    "default_title": "Meet Plexus settings",
+    "default_title": "LumaWeave settings",
     "default_popup": "popup/popup.html",
     "default_icon": { "48": "icons/icon48.png", "128": "icons/icon128.png" }
   },
@@ -24,7 +25,7 @@
         "src/status.js",
         "src/clap.js",
         "src/particles.js",
-        "src/plexus.js",
+        "src/weave.js",
         "src/lighting.js",
         "src/tracker.js",
         "src/audio-clap.js",
@@ -39,7 +40,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["detector/*", "vendor/*"],
+      "resources": ["detector/*", "vendor/*", "vendor/wasm/*"],
       "matches": ["https://meet.google.com/*"]
     }
   ],

@@ -129,3 +129,10 @@ test('one clap detected twice within a blink is not a double clap', () => {
   assert.strictEqual(dc.register(60), 'ignored');
   assert.strictEqual(dc.register(500), 'double');
 });
+test('sound can use the recent-hand gate while camera gesture detection is disabled', () => {
+  const detector=createClapDetector();
+  assert.strictEqual(detector.update(pair(3),0,ASPECT,false),false);
+  assert.strictEqual(detector.update(pair(.4),150,ASPECT,false),false);
+  assert.strictEqual(detector.update(pair(.4),300,ASPECT,false),false);
+  assert.strictEqual(detector.confirmAudio(350),true);
+});

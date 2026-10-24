@@ -5,7 +5,7 @@
 // A double clap (two single claps in quick succession) toggles the effect, so
 // single-clap detection can stay forgiving without random toggles.
 (() => {
-  const FX = (globalThis.__plexusFx = globalThis.__plexusFx || {});
+  const FX = (globalThis.__lumaweaveFx = globalThis.__lumaweaveFx || {});
 
   const PALM_IDS = [0, 5, 9, 13, 17];
 
@@ -91,8 +91,9 @@
     }
 
     // Feed every tracking result. Returns true when a single clap just happened.
-    function update(hands, now, aspect = 16 / 9) {
+    function update(hands, now, aspect = 16 / 9, detectGesture = true) {
       if (hands.length) lastHandAt = now;
+      if (!detectGesture) { samples = []; pending = null; return false; }
       const m = measure(hands, aspect, cfg.maxTiltDeg);
       if (resolvePending(m, now)) return true;
       if (m !== null) {

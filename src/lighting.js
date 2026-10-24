@@ -1,4 +1,4 @@
-// Lighting pass applied to the camera footage underneath the plexus:
+// Lighting pass applied to the camera footage underneath the lumaweave:
 //  - darken: dims the footage while the effect is on so the glow pops;
 //  - light spill: the web's glow color washes onto nearby footage like a real
 //    light source (soft-light tint plus a little additive bloom);
@@ -6,8 +6,8 @@
 //    background is dimmed more than you, and the glow lights your body with a
 //    rim light along your silhouette.
 (() => {
-  const FX = (globalThis.__plexusFx = globalThis.__plexusFx || {});
-  const { rgb } = globalThis.__plexusSettings;
+  const FX = (globalThis.__lumaweaveFx = globalThis.__lumaweaveFx || {});
+  const { rgb } = globalThis.__lumaweaveSettings;
 
   const LAYER_SCALE = 0.5; // light layers are rendered at half resolution
   const MASK_STALE_MS = 700;

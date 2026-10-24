@@ -34,3 +34,10 @@ test('presets change colors but keep on/off choices', () => {
 test('rgb converts hex to an rgba() component list', () => {
   assert.strictEqual(S.rgb('#a878ff'), '168, 120, 255');
 });
+test('sound is opt-in and performance/accessibility settings are validated', () => {
+  assert.strictEqual(S.sanitize({}).clapSound, false);
+  assert.strictEqual(S.sanitize({performance:'fastest'}).performance, 'balanced');
+  assert.strictEqual(S.sanitize({performance:'battery',reducedMotion:true,clapGesture:false}).clapGesture, false);
+  assert.strictEqual(S.sanitize({reducedMotion:true}).reducedMotion, true);
+  assert.deepStrictEqual(S.applyPreset(S.sanitize({}), '__proto__'), S.sanitize({}));
+});

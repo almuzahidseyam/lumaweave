@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LumaWeave — a little light, in your hands</title>
+  <link rel="icon" href="../icons/logo.svg" />
+  <link rel="stylesheet" href="demo.css" />
+</head>
+<body>
+  <main>
+    <header><a class="brand" href="./index.html"><img src="../icons/logo.svg" width="38" height="38" alt="" /><span>LumaWeave</span></a><span class="tag">ON-DEVICE · NO ACCOUNT</span></header>
+    <div class="intro"><p class="eyebrow">A LITTLE LIGHT, IN YOUR HANDS</p><h1>Ordinary calls.<br /><span>Extraordinary hands.</span></h1><p>Weave glowing threads between your fingertips.<br />Explore the effect here, then bring it to Google Meet.</p></div>
+    <div class="workspace">
+      <section class="stage" aria-label="Effect preview">
+        <div class="stage-bar"><span id="mode">SIMULATED HANDS · CAMERA OFF</span><span id="fps">LIVE PREVIEW</span></div>
+        <canvas id="previewCanvas" width="1280" height="720" aria-label="Animated light weaving between two simulated hands"></canvas>
+        <video id="cameraVideo" autoplay muted playsinline hidden aria-label="Your processed camera preview"></video>
+        <p id="tracking" class="stage-caption" role="status">No camera or microphone is being used.</p>
+      </section>
+      <aside aria-label="Preview controls">
+        <h2>Make it yours</h2><p class="subtle">Start with a palette. Find your glow.</p>
+        <div id="palettes" class="palettes" aria-label="Color palettes"></div>
+        <label class="select-label" for="quality">Tracking quality</label><select id="quality"><option value="battery">Battery saver</option><option value="balanced" selected>Balanced</option><option value="quality">High quality</option></select>
+        <label class="check"><input id="gentle" type="checkbox" /> Gentler motion</label>
+        <label class="check"><input id="personLighting" type="checkbox" disabled /> Person lighting <span class="subtle">· camera only</span></label>
+        <button id="toggleEffect" class="primary" type="button">Pause the light</button>
+        <button id="startCamera" class="secondary" type="button">Try with my camera</button>
+        <button id="stopCamera" class="secondary" type="button" hidden>Stop camera</button>
+        <p class="privacy">Camera access starts only when you ask. This preview never requests a microphone.</p>
+      </aside>
+    </div>
+    <section class="steps" aria-label="Use in Google Meet"><div><span>01</span><h3>Add the extension</h3><p>Load the LumaWeave folder from your browser’s Extensions page in Developer mode.</p></div><div><span>02</span><h3>Open Google Meet</h3><p>Turn on your camera. Open the toolbar popup to choose colors and tracking quality.</p></div><div><span>03</span><h3>Bring your hands together</h3><p>Double-clap in view, use the popup, or press Alt + Shift + P to toggle the light.</p></div></section>
+    <footer><span>Local processing. Bundled models. Your camera, your choice.</span><a href="https://github.com/almuzahidseyam/lumaweave" target="_blank" rel="noreferrer">Source & setup ↗</a></footer>
+  </main>
+  <script src="../src/settings.js"></script><script src="../src/storage.js"></script><script src="../src/status.js"></script><script src="../src/clap.js"></script><script src="../src/particles.js"></script><script src="../src/weave.js"></script><script src="../src/lighting.js"></script><script src="../src/tracker.js"></script><script src="../src/audio-clap.js"></script><script src="../src/engine.js"></script><script src="../src/pipeline.js"></script><script src="demo.js"></script>
+</body>
+</html>
