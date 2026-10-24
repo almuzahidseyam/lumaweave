@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Meet Plexus</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <img src="../icons/icon48.png" alt="" width="28" height="28" />
+        <div>
+          <h1>Meet Plexus</h1>
+          <p id="state" class="state">Open a Google Meet tab</p>
+        </div>
+      </div>
+      <button id="toggle" type="button" disabled>Toggle</button>
+    </header>
+
+    <section>
+      <h2>Color presets</h2>
+      <div id="presets" class="chips"></div>
+    </section>
+
+    <section>
+      <h2>Elements</h2>
+      <ul id="elements" class="rows"></ul>
+    </section>
+
+    <section>
+      <h2>Footage</h2>
+      <label class="row slider">
+        <span>Darken while on</span>
+        <input id="darken" type="range" min="0" max="60" step="1" />
+        <output id="darkenOut"></output>
+      </label>
+      <label class="row">
+        <input id="spillOn" type="checkbox" />
+        <span>Light spill onto footage</span>
+      </label>
+      <label class="row slider indent">
+        <span>Strength</span>
+        <input id="spill" type="range" min="0" max="100" step="1" />
+        <output id="spillOut"></output>
+      </label>
+      <label class="row">
+        <input id="personOn" type="checkbox" />
+        <span>Person-aware lighting <em>uses more CPU/GPU</em></span>
+      </label>
+      <label class="row slider indent">
+        <span>Strength</span>
+        <input id="person" type="range" min="0" max="100" step="1" />
+        <output id="personOut"></output>
+      </label>
+    </section>
+
+    <section>
+      <h2>Clap</h2>
+      <label class="row">
+        <input id="clapSound" type="checkbox" />
+        <span>Also listen for the clap sound <em>mic stays on this computer</em></span>
+      </label>
+      <p class="hint">Double-clap to turn on, double-clap again to turn off. Alt+Shift+P also toggles.</p>
+    </section>
+
+    <footer>
+      <button id="reset" type="button" class="ghost">Reset to defaults</button>
+    </footer>
+
+    <script src="../src/settings.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Meet Plexus harness</title>
+    <style>
+      body { margin: 0; background: #111; color: #ddd; font: 14px system-ui, sans-serif; }
+      main { display: grid; gap: 12px; padding: 16px; max-width: 1000px; margin: auto; }
+      video { width: 100%; background: #000; border-radius: 8px; }
+      #src { width: 240px; }
+      pre { margin: 0; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div>
+        Source: <code id="srcName"></code> — Webcam: add <code>?cam=1</code>.
+        <button id="toggle">Toggle effect (Alt+Shift+P)</button>
+      </div>
+      <video id="out" autoplay muted playsinline></video>
+      <pre id="stats">starting…</pre>
+      <video id="src" muted playsinline loop></video>
+    </main>
+    <script>
+      // Serve the extension folder as the site root; the detector iframe then
+      // loads from the same origin, just like it loads from the extension in Meet.
+      document.documentElement.dataset.plexusBase = `${location.origin}/`;
+    </script>
+    <script src="../src/settings.js"></script>
+    <script src="../src/status.js"></script>
+    <script src="../src/clap.js"></script>
+    <script src="../src/particles.js"></script>
+    <script src="../src/plexus.js"></script>
+    <script src="../src/lighting.js"></script>
+    <script src="../src/tracker.js"></script>
+    <script src="../src/audio-clap.js"></script>
+    <script src="../src/engine.js"></script>
+    <script src="../src/pipeline.js"></script>
+    <script src="../src/hook.js"></script>
+    <script>
+      const FX = globalThis.__plexusFx;
+      const params = new URLSearchParams(location.search);
+      // No extension bridge here: ?person=1 turns on person-aware lighting.
+      FX.settings = __plexusSettings.sanitize({
+        personLight: { on: params.get('person') === '1', strength: 70 },
+      });
+      const out = document.getElementById('out');
+      const statsEl = document.getElementById('stats');
+
+      async function sourceStream() {
+        if (params.get('cam')) return navigator.mediaDevices.getUserMedia({ video: true });
+        const src = document.getElementById('src');
+        src.src = params.get('src') || '/__video';
+        document.getElementById('srcName').textContent = src.src;
+        await src.play();
+        return src.captureStream();
+      }
+
+      async function start() {
+        const stream = await sourceStream();
+        // Webcam path already went through the hook; the video path wraps here.
+        out.srcObject = params.get('cam') ? stream : FX.wrapStream(stream);
+        let frames = 0;
+        let last = performance.now();
+        out.requestVideoFrameCallback(function count() {
+          frames += 1;
+          out.requestVideoFrameCallback(count);
+        });
+        setInterval(() => {
+          const now = performance.now();
+          const fps = (frames * 1000) / (now - last);
+          frames = 0;
+          last = now;
+          window.__plexusStats = { ...FX.engine.stats(), fps: Math.round(fps) };
+          statsEl.textContent = JSON.stringify(window.__plexusStats, null, 1);
+        }, 1000);
+      }
+
+      document.getElementById('toggle').onclick = () => FX.engine.toggle();
+      start().catch((e) => (statsEl.textContent = `error: ${e.message}`));
+    </script>
+  </body>
+</html>
