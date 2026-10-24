@@ -8,7 +8,7 @@
 
 ## Install in Chrome or Edge
 
-1. Download `lumaweave-2.0.0.zip` from Releases and extract it.
+1. Download `lumaweave-2.0.1.zip` from Releases and extract it.
 2. Open `chrome://extensions` or `edge://extensions`, enable **Developer mode**, and choose **Load unpacked**.
 3. Select the extracted folder containing `manifest.json`. Pin LumaWeave to the toolbar.
 4. Disable any older Meet Plexus installation, reload Google Meet, and turn on your camera.
@@ -86,4 +86,9 @@ The video path is frame-driven and does not depend on animation frames for Meet 
 - **Double-clap does not toggle:** keep both hands visible, separate them between claps, or use the keyboard/popup. Sound detection is optional and does not work while the source mic is muted.
 - **Preferences not saved:** the popup reports the problem. Reopen/retry, or export your current preferences.
 
-LumaWeave 2.0 evolves the user-provided Meet Plexus 1.1.1 archive. Its imported baseline is preserved in Git history. See [source provenance and third-party notices](THIRD_PARTY_NOTICES.md) for the original archive's licensing status and verified Google model/runtime origins. This project is independent of Google.
+## License
+
+The application code and documentation are licensed under the [MIT License](LICENSE).
+Copyright © 2026 **Muhammad Al-Muzahid**. Bundled third-party libraries and model weights retain their own licenses and copyright notices.
+
+LumaWeave evolves the user-provided Meet Plexus 1.1.1 archive. Its imported baseline is preserved in Git history. See [source provenance and third-party notices](THIRD_PARTY_NOTICES.md) for verified Google model/runtime origins. This project is independent of Google.

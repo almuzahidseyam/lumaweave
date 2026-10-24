@@ -1,6 +1,8 @@
 # Source and bundled components
 
-LumaWeave 2.0 is based on the user-supplied **Meet Plexus 1.1.1** archive, imported in the first commit so the original source remains identifiable. That archive supplied no separate license or author notice for the application code; this repository does not invent an upstream author attribution or relicense that source. New LumaWeave changes include lifecycle fixes, tracker isolation, local settings, the preview, UI, tests and release tooling. Public availability alone does not grant a software license.
+The LumaWeave application code and documentation are released under the **MIT License**, copyright **2026 Muhammad Al-Muzahid**, at the maintainer's request. See the root `LICENSE` file. This application license does not replace the licenses or copyright notices of bundled third-party components.
+
+LumaWeave is based on the user-supplied **Meet Plexus 1.1.1** archive, imported in the first commit so the original source remains identifiable. New LumaWeave changes include lifecycle fixes, tracker isolation, local settings, the preview, UI, tests and release tooling.
 
 ## MediaPipe Tasks Vision 0.10.14
 

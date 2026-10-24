@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.1 — October 24, 2026
+
+- Added the MIT License for the application code and documentation, copyright 2026 Muhammad Al-Muzahid.
+- Included the license in the installable ZIP and added package author/license metadata.
+- Preserved bundled third-party licenses and clarified application/source notices. No camera or rendering behavior changed.
+
 ## 2.0.0 — October 24, 2026
 
 - Renamed Meet Plexus to LumaWeave throughout the extension, messages, UI and documentation; introduced a woven-light icon.

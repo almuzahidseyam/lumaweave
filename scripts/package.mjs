@@ -6,7 +6,7 @@ import { resolve } from 'node:path';
 
 const manifest = JSON.parse(await readFile('manifest.json','utf8'));
 const prefix = `lumaweave-${manifest.version}/`;
-const names = ['manifest.json','README.md','CHANGELOG.md','THIRD_PARTY_NOTICES.md','docs/privacy.md','docs/বাংলা-ব্যবহারবিধি.md','docs/preview.png'];
+const names = ['manifest.json','LICENSE','README.md','CHANGELOG.md','THIRD_PARTY_NOTICES.md','docs/privacy.md','docs/বাংলা-ব্যবহারবিধি.md','docs/preview.png'];
 for (const folder of ['src','popup','icons','detector','vendor','demo']) {
   for (const item of await readdir(folder,{recursive:true,withFileTypes:true})) {
     if (!item.isFile()) continue;
